@@ -2,19 +2,16 @@ package main
 
 import (
     "fmt"
-    "github.com/Caitlin-B/cryptic-hint/search"
-    "net/http"
+    "github.com/Caitlin-B/cryptic-hint/internal/server"
+    "log"
 )
 
 const portNum string = ":8080"
 
 func main() {
-    http.HandleFunc("/", search.Search)
-
-    err := http.ListenAndServe(portNum, nil)
-    if err != nil {
-        fmt.Printf("unable to start server: %s", err.Error())
-        return
+    srv := server.NewHTTPServer(portNum)
+    fmt.Printf("starting server on port %s", portNum)
+    if err := srv.ListenAndServe(); err != nil {
+        log.Fatal(err)
     }
-    fmt.Printf("listening on port %s", err.Error())
 }
