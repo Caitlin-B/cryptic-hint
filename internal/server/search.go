@@ -15,7 +15,8 @@ type Indicators struct {
 }
 
 // TEMP CODE TO CHECK WORKS
-func (i *Indicators) Search(s string) *Indicators {
+func (i *server) Search(s string) *Indicators {
+
     if s == "askew" {
         return &Indicators{Indicators: []*Indicator{&Indicator{
             Word: "askew",

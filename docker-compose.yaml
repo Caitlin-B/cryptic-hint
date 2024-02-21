@@ -1,0 +1,36 @@
+version: "3.8"
+services:
+  adminer:
+    image: adminer:4.8.1
+    ports:
+      - 8088:8080
+    restart: on-failure
+    container_name: adminer
+    depends_on:
+      - database
+    environment:
+      ADMINER_DEFAULT_DRIVER: pgsql
+      ADMINER_DEFAULT_SERVER: database:5432
+    networks:
+      - internal
+  database:
+    image: postgis/postgis:10-3.0-alpine
+    ports:
+      - 5432:5432
+    restart: on-failure
+    container_name: database
+    environment:
+      POSTGRES_DB: cryptic
+      POSTGRES_PASSWORD: bsanc5nmvmvgnup844rg
+      POSTGRES_USER: caitlinbishop
+    networks:
+      - internal
+    volumes:
+      - db-volume:/var/lib/postgresql/data
+networks:
+  internal:
+    driver: bridge
+    internal: false
+volumes:
+  db-volume:
+  localstack:
